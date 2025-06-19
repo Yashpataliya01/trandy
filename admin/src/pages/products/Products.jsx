@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link, useLocation, useParams } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { Plus, Edit3, Trash2, X, Save, Search, Loader2 } from "lucide-react";
 
 const ProductPanel = () => {
@@ -17,10 +17,19 @@ const ProductPanel = () => {
     discountedPrice: "",
     image: [],
     category: "",
+    tags: [],
   });
   const [searchTerm, setSearchTerm] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
 
+  const tagOptions = [
+    "New",
+    "Trending",
+    "Best Seller",
+    "Limited Edition",
+    "Sale",
+    "Default",
+  ];
   const API = "http://localhost:5000/api";
 
   const fetchProducts = async () => {
@@ -29,7 +38,6 @@ const ProductPanel = () => {
       const url = `${API}/products/${
         cat?._id ? `?category=${encodeURIComponent(cat?._id)}` : ""
       }`;
-      console.log(url, cat);
       const res = await fetch(url);
       const data = await res.json();
       if (!res.ok) throw new Error(data?.message || "Failed to fetch products");
@@ -114,6 +122,7 @@ const ProductPanel = () => {
       discountedPrice: product?.discountedPrice || "",
       image: product?.image || [],
       category: product?.category || "",
+      tags: product?.tags || [],
     });
     setIsModalOpen(true);
   };
@@ -308,7 +317,40 @@ const ProductPanel = () => {
                   ))}
                 </select>
               </div>
+
+              {/* ✅ Tags Checkbox Field */}
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Tags
+                </label>
+                <div className="flex flex-wrap gap-2">
+                  {tagOptions.map((tag) => (
+                    <label
+                      key={tag}
+                      className="flex items-center space-x-2 text-sm bg-gray-100 px-3 py-1 rounded-md cursor-pointer hover:bg-gray-200"
+                    >
+                      <input
+                        type="checkbox"
+                        value={tag}
+                        checked={formData.tags.includes(tag)}
+                        onChange={(e) => {
+                          const checked = e.target.checked;
+                          setFormData((prev) => ({
+                            ...prev,
+                            tags: checked
+                              ? [...prev.tags, tag]
+                              : prev.tags.filter((t) => t !== tag),
+                          }));
+                        }}
+                        className="accent-blue-600"
+                      />
+                      <span>{tag}</span>
+                    </label>
+                  ))}
+                </div>
+              </div>
             </div>
+
             <div className="flex gap-3 mt-6">
               <button
                 onClick={() => setIsModalOpen(false)}

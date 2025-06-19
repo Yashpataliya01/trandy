@@ -21,7 +21,7 @@ export const getAllProducts = async (req, res) => {
 };
 
 export const createProduct = async (req, res) => {
-  const { name, description, price, image, discountedPrice, category } =
+  const { name, description, price, image, discountedPrice, category, tag } =
     req.body;
   try {
     const newProduct = new Product({
@@ -31,6 +31,7 @@ export const createProduct = async (req, res) => {
       image,
       discountedPrice,
       category,
+      tag: tag || "New",
     });
     await newProduct.save();
     res.status(201).json({ message: "Product created successfully" });
@@ -41,7 +42,7 @@ export const createProduct = async (req, res) => {
 };
 
 export const updateProduct = async (req, res) => {
-  const { name, description, price, image, discountedPrice, category } =
+  const { name, description, price, image, discountedPrice, category, tag } =
     req.body;
 
   try {
@@ -56,6 +57,7 @@ export const updateProduct = async (req, res) => {
     product.image = image === null ? product.image : image; // Keep this logic if null is intentional
     product.discountedPrice = discountedPrice ?? product.discountedPrice;
     product.category = category ?? product.category;
+    product.tag = tag ?? product.tag;
 
     await product.save();
 

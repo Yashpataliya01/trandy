@@ -7,6 +7,7 @@ import Home from "./pages/home/Home.jsx";
 import Login from "./pages/authentication/Login.jsx";
 import Navbar from "./components/navigation/Navbar.jsx";
 import Products from "./pages/products/Products.jsx";
+import Users from "./pages/users/Users.jsx";
 
 const App = () => {
   const isLogin = localStorage.getItem("isLogin");
@@ -18,6 +19,7 @@ const App = () => {
           <>
             <Route path="/" element={<Home />} />
             <Route path="/product/:id" element={<Products />} />
+            <Route path="/users" element={<Users />} />
             <Route path="/login" element={<Navigate to="/" />} />
           </>
         ) : (

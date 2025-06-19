@@ -29,6 +29,10 @@ const productSchema = new mongoose.Schema(
       required: true,
       ref: "Categorie",
     },
+    tag: {
+      type: [String],
+      default: ["New"], // Optional: define a default value
+    },
   },
   { timestamps: true }
 );
