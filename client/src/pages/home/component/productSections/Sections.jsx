@@ -1,6 +1,7 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { Heart } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const ProductShowcase = () => {
   const products = [
@@ -127,14 +128,15 @@ const ProductShowcase = () => {
             transition={{ delay: 1 }}
             className="text-center mt-16"
           >
-            <motion.a
-              href="#"
-              whileHover={{ y: -2 }}
-              className="inline-block text-gray-900 text-sm tracking-wider border-b border-gray-400 pb-1 hover:border-gray-900 transition-colors duration-300"
-              style={{ fontFamily: "Inter, sans-serif", fontWeight: 400 }}
-            >
-              View All Products
-            </motion.a>
+            <motion.div whileHover={{ y: -2 }} className="inline-block">
+              <Link
+                to="/products"
+                className="text-gray-900 text-sm tracking-wider border-b border-gray-400 pb-1 hover:border-gray-900 transition-colors duration-300"
+                style={{ fontFamily: "Inter, sans-serif", fontWeight: 400 }}
+              >
+                View All Products
+              </Link>
+            </motion.div>
           </motion.div>
         </div>
       </div>
